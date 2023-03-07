@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from .views import *
-from .forms import SignUpForm
+from .forms import CreateUserForm
 # Create your views here.
 
 
@@ -13,7 +13,6 @@ def index(request):
 
 
 def login(request):
-
     context = {
         'title': "Netflix"
     }
@@ -21,12 +20,13 @@ def login(request):
 
 
 def signup(request):
-    form = SignUpForm()
+    form = CreateUserForm
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
     context = {
+        'form':form,
         'title': "Netflix"
     }
     return render(request, 'signup.html', context)
