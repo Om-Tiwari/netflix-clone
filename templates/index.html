@@ -19,11 +19,17 @@
                 <img src="{% static 'netflix.png' %}" alt="logo" class="w-9/12 md:w-2/12">
             </div>
             <div>
+                {{request.user}}
                 <button class="bg-transparent text-white py-1 px-2 mx-5 border border-white rounded">
                     English <i class="fa fa-caret-down"></i>
                 </button>
                 <button class='bg-red-700 py-1 px-5 text-white md:text-lg rounded-md'>
-                    <a href="{% url 'core:login' %}">Sign In</a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'core:signout' %}">Sign Out</a>
+                    {% endif %}
+                    {% if not request.user.is_authenticated %}
+                        <a href="{% url 'core:signin' %}">Sign In</a>
+                    {% endif %}
                 </button>
             </div>
         </nav>
