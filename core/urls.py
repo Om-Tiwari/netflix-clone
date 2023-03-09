@@ -1,10 +1,13 @@
 from django.urls import path
-from . import views
+from .views import *
 app_name = 'core'
 
 urlpatterns = [
-    path('', views.index, name='netflix'),
-    path('signin', views.signin, name='signin'),
-    path('signup', views.signup, name='signup'),
-    path('signout', views.signout, name='signout'),
+    path('', index, name='netflix'),
+    path('signin', signin, name='signin'),
+    path('signup', signup, name='signup'),
+    path('signout', signout, name='signout'),
+    path('watch',Watch.as_view(),name='watch'),
+    path('movie/detail/<str:movie_id>/',ShowMovieDetail.as_view(),name='show_det'),
+    path('movie/play/<str:movie_id>/',ShowMovie.as_view(),name='play')
 ]
