@@ -1,218 +1,299 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="{% static 'output.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+    <link rel="stylesheet" href="{% static 'output.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="bg-black text-gray-100">
-        <!--navigation-->
-        <nav class="flex justify-between items-center py-6 px-14 absolute w-full z-50">
-            <div class="w-8/12">
-                <img src="{% static 'netflix.png' %}" alt="logo" class="w-9/12 md:w-2/12">
+      <!--navigation-->
+      <nav
+        class="flex justify-between items-center py-6 px-14 absolute w-full z-50"
+      >
+        <div class="w-8/12">
+          <img
+            src="{% static 'netflix.png' %}"
+            alt="logo"
+            class="w-9/12 md:w-2/12"
+          />
+        </div>
+        <div>
+          {% if request.user.is_authenticated %} {{request.user}} {% endif %}
+          <button
+            class="bg-transparent text-white py-1 px-2 mx-5 border border-white rounded"
+          >
+            English <i class="fa fa-caret-down"></i>
+          </button>
+          <button class="bg-red-700 py-1 px-5 text-white md:text-lg rounded-md">
+            {% if request.user.is_authenticated %} {% else %}
+            <a href="{% url 'core:signin' %}">Sign In</a>
+            {% endif %}
+          </button>
+        </div>
+      </nav>
+      <!--header-->
+      <header
+        class="min-h-screen border-gray-700 border-b-8 flex justify-center items-center bg-no-repeat bg-cover"
+        style="
+          background-image: radial-gradient(
+              closest-side,
+              transparent 0%,
+              rgba(40, 37, 37, 0.402) 40%,
+              rgba(0, 0, 0, 0.553) 70%,
+              rgba(0, 0, 0, 0.804) 100%
+            ),
+            url('{% static 'bg.jpg' %}');
+        "
+      >
+        <div
+          class="z-10 h-full py-32 md:py-0 text-gray-100 text-center flex items-center flex-col"
+        >
+          <h1
+            class="font-semibold px-10 mx-auto text-6xl md:text-5xl w-10/12 md:w-3/4 text-center"
+          >
+            Unlimited movies, TV shows, and more.
+          </h1>
+          <h3 class="font-semibold text-xl md:text-xl py-5">
+            Watch anywhere. Cancel anytime.
+          </h3>
+          <h4 class="font-semibold text-sm md:text-lg pb-3">
+            Ready to watch? Enter your email to create or restart your
+            membership.
+          </h4>
+          <div class="w-full flex justify-center">
+            <div class="flex justify-center items-center w-11/12 md:w-10/12">
+              <input
+                type="email"
+                placeholder="Email address"
+                class="md:py-5 py-4 px-2 placeholder-gray-500 rounded-tl-sm rounded-bl-sm outline-none text-gray-900 bg-gray-50 block w-8/12 md:w-3/4"
+              />
+              <button
+                type="submit"
+                name="email-submit"
+                class="bg-red-700 font-medium md:font-normal md:w-1/4 flex justify-center items-center py-4 px-1 md:px-0 rounded-br-sm rounded-tr-sm md:text-2xl"
+              >
+                <span>
+                  <a href="{% url 'core:signup' %}"
+                    >Get Started <i class="fa fa-angle-right"></i
+                  ></a>
+                </span>
+              </button>
             </div>
-            <div>
-                {% if request.user.is_authenticated %}
-                    {{request.user}}
-                {% endif %}
-                <button class="bg-transparent text-white py-1 px-2 mx-5 border border-white rounded">
-                    English <i class="fa fa-caret-down"></i>
-                </button>
-                <button class='bg-red-700 py-1 px-5 text-white md:text-lg rounded-md'>
-                    {% if request.user.is_authenticated %}
-                    {% else %}
-                        <a href="{% url 'core:signin' %}">Sign In</a>
-                    {% endif %}
-                </button>
+          </div>
+        </div>
+      </header>
+      <!--tv-->
+      <section
+        class="flex flex-col md:flex-row items-center p-10 border-gray-900 border-b-8"
+        style="min-height: 80vh"
+      >
+        <div
+          class="flex flex-col justify-center text-center md:text-left p-5 md:w-1/2 md:p-10"
+        >
+          <h2 class="font-bold md:text-5xl text-4xl mb-4">Enjoy on your TV.</h2>
+          <h5 class="md:text-xl text-xl font-semibold mr-12">
+            Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray
+            players, and more.
+          </h5>
+        </div>
+        <div class="md:w-1/2 flex justify-center items-center">
+          <img src="{% static 'tv.png' %}" class="w-11/12" alt="" />
+        </div>
+      </section>
+      <!--mobile-->
+      <section
+        class="flex flex-col md:flex-row items-center border-gray-900 border-b-8"
+        style="min-height: 80vh"
+      >
+        <div class="md:w-1/2 flex justify-center items-center">
+          <img src="{% static 'mobile-0819.jpg' %}" class="w-11/12" alt="" />
+        </div>
+        <div
+          class="md:w-1/2 flex flex-col justify-center text-center md:text-left p-5 md:p-10 order-1"
+        >
+          <h2 class="md:text-5xl text-4xl font-semibold mb-4">
+            Download your shows to watch offline.
+          </h2>
+          <h5 class="md:text-xl text-lg">
+            Save your favorites easily and always have something to watch.
+          </h5>
+        </div>
+      </section>
+      <!--multiple device-->
+      <section
+        class="flex flex-col md:flex-row items-center p-10 border-gray-900 border-b-8"
+        style="min-height: 80vh"
+      >
+        <div
+          class="flex flex-col justify-center text-center md:text-left p-5 md:w-1/2 md:p-10"
+        >
+          <h2 class="font-bold md:text-5xl text-4xl mb-4">Watch everywhere.</h2>
+          <h5 class="md:text-xl text-xl font-semibold mr-12">
+            Stream unlimited movies and TV shows on your phone, tablet, laptop,
+            and TV.
+          </h5>
+        </div>
+        <div class="md:w-1/2 flex justify-center items-center">
+          <img src="{% static 'device-pile-in.png' %}" class="w-11/12" alt="" />
+        </div>
+      </section>
+      <!--kids-->
+      <section
+        class="flex flex-col md:flex-row items-center border-gray-900 border-b-8"
+        style="min-height: 80vh"
+      >
+        <div
+          class="md:w-1/2 flex flex-col justify-center text-center md:text-left p-5 md:p-10 order-1"
+        >
+          <h2 class="md:text-5xl text-4xl font-semibold mb-4">
+            Create profiles for children.
+          </h2>
+          <h5 class="md:text-xl text-lg">
+            Send children on adventures with their favourite characters in a
+            space made just for them—free with your membership.
+          </h5>
+        </div>
+        <div class="md:w-1/2 flex justify-center items-center">
+          <img src="{% static 'netflix-kid.png' %}" class="w-11/12" alt="" />
+        </div>
+      </section>
+      <!--faq-->
+      <section
+        class="flex flex-col items-center align-top flex-wrap justify-center border-gray-900 border-b-8"
+        style="min-height: 80vh"
+      >
+        <h1 class="font-bold text-5xl py-12 mx-auto">
+          Frequently Asked Questions
+        </h1>
+        <div class="w-8/12 mx-auto">
+          <!--faq 1-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">What is Netflix?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            Netflix is a streaming service that offers a wide variety of
+            award-winning TV shows, movies, anime, documentaries and more – on
+            thousands of internet-connected devices. You can watch as much as
+            you want, whenever you want, without a single ad – all for one low
+            monthly price. There's always something new to discover, and new TV
+            shows and movies are added every week!
+          </div>
+          <!--faq 2-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">How much does Netflix cost?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            Watch Netflix on your smartphone, tablet, Smart TV, laptop, or
+            streaming device, all for one fixed monthly fee. Plans range from ₹
+            149 to ₹ 649 a month. No extra costs, no contracts.
+          </div>
+          <!--faq 3-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">Where can I watch?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            Watch anywhere, anytime. Sign in with your Netflix account to watch
+            instantly on the web at netflix.com from your personal computer or
+            on any internet-connected device that offers the Netflix app,
+            including smart TVs, smartphones, tablets, streaming media players
+            and game consoles. You can also download your favourite shows with
+            the iOS, Android, or Windows 10 app. Use downloads to watch while
+            you're on the go and without an internet connection. Take Netflix
+            with you anywhere.
+          </div>
+          <!--faq 4-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">How do I cancel?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            Netflix is flexible. There are no annoying contracts and no
+            commitments. You can easily cancel your account online in two
+            clicks. There are no cancellation fees – start or stop your account
+            anytime.
+          </div>
+          <!--faq 5-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">What can I watch on Netflix?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            Netflix has an extensive library of feature films, documentaries, TV
+            shows, anime, award-winning Netflix originals, and more. Watch as
+            much as you want, anytime you want.
+          </div>
+          <!--faq 6-->
+          <div
+            class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center"
+          >
+            <a href="" onclick="#">Is Netflix good for kids?</a>
+            <i class="fa fa-plus"></i>
+          </div>
+          <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
+            The Netflix Kids experience is included in your membership to give
+            parents control while kids enjoy family-friendly TV shows and films
+            in their own space. Kids profiles come with PIN-protected parental
+            controls that let you restrict the maturity rating of content kids
+            can watch and block specific titles you don’t want kids to see.
+          </div>
+          <h4 class="pt-10 text-center font-semibold text-sm md:text-lg pb-3">
+            Ready to watch? Enter your email to create or restart your
+            membership.
+          </h4>
+          <div class="pb-10 w-full flex justify-center">
+            <div class="flex justify-center items-center w-11/12 md:w-10/12">
+              <input
+                type="email"
+                name=""
+                id=""
+                placeholder="Email address"
+                class="md:py-5 py-4 px-2 placeholder-gray-500 rounded-tl-sm rounded-bl-sm outline-none text-gray-900 bg-gray-50 block w-8/12 md:w-3/4"
+              />
+              <button
+                type="submit"
+                name="email-submit"
+                class="bg-red-700 font-medium md:font-normal md:w-1/4 flex justify-center items-center py-4 px-1 md:px-0 rounded-br-sm rounded-tr-sm md:text-2xl"
+              >
+                <span>
+                  <a href="{% url 'core:signup' %}"
+                    >Get Started<i class="fa fa-angle-right"></i
+                  ></a>
+                </span>
+              </button>
             </div>
-        </nav>
-        <!--header-->
-        <header class="min-h-screen border-gray-700 border-b-8 flex justify-center items-center bg-no-repeat bg-cover"
-            style="background-image: radial-gradient(closest-side, transparent 0%,rgba(40, 37, 37, 0.402) 40% , rgba(0, 0, 0, 0.553) 70%, rgba(0, 0, 0, 0.804) 100%),url('{% static 'bg.jpg' %}')">
-            <div class="z-10 h-full py-32 md:py-0 text-gray-100 text-center flex items-center flex-col">
-                <h1 class="font-semibold px-10 mx-auto text-6xl md:text-5xl w-10/12 md:w-3/4 text-center">
-                    Unlimited movies, TV shows, and more.
-                </h1>
-                <h3 class="font-semibold text-xl md:text-xl py-5">
-                    Watch anywhere. Cancel anytime.
-                </h3>
-                <h4 class="font-semibold text-sm md:text-lg pb-3">
-                    Ready to watch? Enter your email to create or restart your membership.
-                </h4>
-                <div class="w-full flex justify-center">
-                    <div class="flex justify-center items-center w-11/12 md:w-10/12">
-                        <input type="email" placeholder="Email address"
-                            class="md:py-5 py-4 px-2 placeholder-gray-500 rounded-tl-sm rounded-bl-sm outline-none  text-gray-900 bg-gray-50 block w-8/12 md:w-3/4">
-                        <button type="submit" name="email-submit"
-                            class="bg-red-700 font-medium md:font-normal md:w-1/4 flex justify-center items-center py-4 px-1 md:px-0 rounded-br-sm rounded-tr-sm md:text-2xl">
-                            <span>
-                                <a href="{% url 'core:signup' %}">Get Started <i
-                                        class="fa fa-angle-right"></i></a>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!--tv-->
-        <section class='flex flex-col md:flex-row items-center p-10 border-gray-900 border-b-8'
-            style="min-height: 80vh;">
-            <div class="flex flex-col justify-center text-center md:text-left p-5 md:w-1/2 md:p-10 ">
-                <h2 class="font-bold md:text-5xl text-4xl mb-4">
-                    Enjoy on your TV.
-                </h2>
-                <h5 class="md:text-xl text-xl font-semibold mr-12">
-                    Watch on Smart TVs, Playstation,
-                    Xbox, Chromecast, Apple TV, Blu-ray players, and more.
-                </h5>
-            </div>
-            <div class='md:w-1/2 flex justify-center items-center'>
-                <img src="{% static 'tv.png' %}" class="w-11/12" alt="">
-            </div>
-        </section>
-        <!--mobile-->
-        <section class='flex flex-col md:flex-row items-center border-gray-900 border-b-8' style="min-height: 80vh;">
-            <div class='md:w-1/2 flex justify-center items-center'>
-                <img src="{% static 'mobile-0819.jpg' %}" class="w-11/12" alt="">
-            </div>
-            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left p-5 md:p-10 order-1">
-                <h2 class="md:text-5xl text-4xl font-semibold mb-4">
-                    Download your shows to watch offline.
-                </h2>
-                <h5 class="md:text-xl text-lg">
-                    Save your favorites easily and always have something to watch.
-                </h5>
-            </div>
-        </section>
-        <!--multiple device-->
-        <section class='flex flex-col md:flex-row items-center p-10 border-gray-900 border-b-8'
-            style="min-height: 80vh;">
-            <div class="flex flex-col justify-center text-center md:text-left p-5 md:w-1/2 md:p-10 ">
-                <h2 class="font-bold md:text-5xl text-4xl mb-4">
-                    Watch everywhere.
-                </h2>
-                <h5 class="md:text-xl text-xl font-semibold mr-12">
-                    Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.
-                </h5>
-            </div>
-            <div class='md:w-1/2 flex justify-center items-center'>
-                <img src="{% static 'device-pile-in.png' %}" class="w-11/12" alt="">
-            </div>
-        </section>
-        <!--kids-->
-        <section class='flex flex-col md:flex-row items-center border-gray-900 border-b-8' style="min-height: 80vh;">
-            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left p-5 md:p-10 order-1">
-                <h2 class="md:text-5xl text-4xl font-semibold mb-4">
-                    Create profiles for children.
-                </h2>
-                <h5 class="md:text-xl text-lg">
-                    Send children on adventures with their favourite characters in a space made just for them—free with
-                    your membership.
-                </h5>
-            </div>
-            <div class='md:w-1/2 flex justify-center items-center'>
-                <img src="{% static 'netflix-kid.png' %}" class="w-11/12" alt="">
-            </div>
-        </section>
-        <!--faq-->
-        <section class='flex flex-col items-center align-top flex-wrap justify-center border-gray-900 border-b-8'
-            style="min-height: 80vh;">
-            <h1 class="font-bold text-5xl py-12 mx-auto">Frequently Asked Questions</h1>
-            <div class="w-8/12 mx-auto">
-                <!--faq 1-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">What is Netflix?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime,
-                    documentaries and more – on thousands of internet-connected devices.
-                    You can watch as much as you want, whenever you want, without a single ad – all for one low monthly
-                    price. There's always something new to discover, and new TV shows and movies are added every week!
-                </div>
-                <!--faq 2-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">How much does Netflix cost?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device, all for one fixed
-                    monthly fee. Plans range from ₹ 149 to ₹ 649 a month. No extra costs, no contracts.
-                </div>
-                <!--faq 3-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">Where can I watch?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web at
-                    netflix.com from your personal computer or on any internet-connected device that offers the Netflix
-                    app, including smart TVs, smartphones, tablets, streaming media players and game consoles.
-                    You can also download your favourite shows with the iOS, Android, or Windows 10 app. Use downloads
-                    to watch while you're on the go and without an internet connection. Take Netflix with you anywhere.
-                </div>
-                <!--faq 4-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">How do I cancel?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    Netflix is flexible. There are no annoying contracts and no commitments. You can easily cancel your
-                    account online in two clicks. There are no cancellation fees – start or stop your account anytime.
-                </div>
-                <!--faq 5-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">What can I watch on Netflix?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning
-                    Netflix originals, and more. Watch as much as you want, anytime you want.
-                </div>
-                <!--faq 6-->
-                <div class="bg-zinc-700 mt-3 p-5 text-xl font-semibold flex justify-between items-center">
-                    <a href="" onclick="#">Is Netflix good for kids?</a>
-                    <i class="fa fa-plus"></i>
-                </div>
-                <div class="bg-zinc-700 mt-0.5 p-5 text-xl font-semibold hidden">
-                    The Netflix Kids experience is included in your membership to give parents control while kids enjoy
-                    family-friendly TV shows and films in their own space.
-                    Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of
-                    content kids can watch and block specific titles you don’t want kids to see.
-                </div>
-                <h4 class="pt-10 text-center font-semibold text-sm md:text-lg pb-3">
-                    Ready to watch? Enter your email to create or restart your membership.
-                </h4>
-                <div class="pb-10 w-full flex justify-center">
-                    <div class="flex justify-center items-center w-11/12 md:w-10/12">
-                        <input type="email" name="" id="" placeholder="Email address"
-                            class="md:py-5 py-4 px-2 placeholder-gray-500 rounded-tl-sm rounded-bl-sm outline-none  text-gray-900 bg-gray-50 block w-8/12 md:w-3/4">
-                        <button type="submit" name="email-submit"
-                            class="bg-red-700 font-medium md:font-normal md:w-1/4 flex justify-center items-center py-4 px-1 md:px-0 rounded-br-sm rounded-tr-sm md:text-2xl">
-                            <span>
-                                <a href="{% url 'core:signup' %}">Get Started<i class="fa fa-angle-right"></i></a>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--footer-->
-        <footer class="px-5 py-10 ">
-            <ul class="flex justify-between items-center">
-                <li>&copy; 2023</li>
-                <li>Made with Django and Tailwind</li>
-                <li>By Om Tiwari</li>
-            </ul>
-        </footer>
+          </div>
+        </div>
+      </section>
+      <!--footer-->
+      <footer class="px-5 py-10">
+        <ul class="flex justify-between items-center">
+          <li>&copy; 2023</li>
+          <li>Made with Django and Tailwind</li>
+          <li>By Om Tiwari</li>
+        </ul>
+      </footer>
     </div>
-</body>
-
+  </body>
 </html>

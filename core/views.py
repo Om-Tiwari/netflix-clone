@@ -64,45 +64,32 @@ def signup(request):
 @method_decorator(login_required(login_url='core:signin'), name="dispatch")
 class Watch(View):
     def get(self, request, *args, **kwargs):
-            movies = Movie.objects.all()
-
-            try:
-                showcase = movies[0]
-            except:
-                showcase = None
-            context = {
-                'title': 'Netflix',
-                'movies': movies,
-                'show_case': showcase
-            }
-            return render(request, 'movieList.html', context)
+        movies = Movie.objects.all()
+        context = {
+            'title': 'Netflix',
+            'movies': movies,
+        }
+        return render(request, 'movieList.html', context)
 
 
 @method_decorator(login_required(login_url='core:signin'), name="dispatch")
 class ShowMovieDetail(View):
     def get(self, request, movie_id, *args, **kwargs):
-        try:
-
-            movie = Movie.objects.get(uuid=movie_id)
-
-            return render(request, 'movieDetail.html', {
-                'movie': movie
-            })
-        except Movie.DoesNotExist:
-            return redirect('core:profile_list')
+        movie = Movie.objects.get(uuid=movie_id)
+        return render(request, 'movieDetail.html', {
+            'movie': movie,
+            'title': "Netflix",
+        })
 
 
 @method_decorator(login_required(login_url='core:signin'), name="dispatch")
 class ShowMovie(View):
     def get(self, request, movie_id, *args, **kwargs):
-        try:
 
-            movie = Movie.objects.get(uuid=movie_id)
+        movie = Movie.objects.get(uuid=movie_id)
+        movie = movie.videos.values()
 
-            movie = movie.videos.values()
-
-            return render(request, 'showMovie.html', {
-                'movie': list(movie)
-            })
-        except Movie.DoesNotExist:
-            return redirect('core:profile_list')
+        return render(request, 'showMovie.html', {
+            'movie': list(movie),
+            'title': 'Netflix',
+        })
