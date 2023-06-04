@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
 import dj_database_url
 from pathlib import Path
 
@@ -21,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$d6%u-0b2yym)nqvd#^jxk@m@rqn8bfbhxh2*kz!tbivh9&-c0'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,9 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'core',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'storages',
 ]
 
@@ -91,7 +92,7 @@ WSGI_APPLICATION = 'django_netflix.wsgi.application'
 
 # render postgress database
 DATABASES = {
-    'default': dj_database_url.parse("postgres://netflix_clone_db_user:IFhzr2SjmlRufbDmfLLx9Bo9U8pXiw6v@dpg-chm9hqu4dad6k5ndvu00-a.singapore-postgres.render.com/netflix_clone_db")
+    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
 
 
@@ -133,30 +134,34 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR, 'static_root')
-MEDIA_ROOT = Path(BASE_DIR, 'media')
+MEDIA_ROOT = Path(BASE_DIR, 'media_root')
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = [
-    Path(BASE_DIR, 'static')
-]
+# STATICFILES_DIRS = [
+#     Path(BASE_DIR, 'static')
+# ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 
 SITE_ID = 1
 
-AWS_ACCESS_KEY_ID = 'AKIAVIFNPKZARVHSRWNC'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'om-netflix-clone'
-AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME = 'ap-south-1'
+AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
