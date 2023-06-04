@@ -1,0 +1,24 @@
+databases:
+  - name: dpg-chm9hqu4dad6k5ndvu00-a
+    databaseName: netflix_clone_db
+    user: netflix_clone_db_user
+
+services:
+  - type: web
+    name: django_netflix
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: "gunicorn django_netflix.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: postgres://netflix_clone_db_user:IFhzr2SjmlRufbDmfLLx9Bo9U8pXiw6v@dpg-chm9hqu4dad6k5ndvu00-a.singapore-postgres.render.com/netflix_clone_db
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: AWS_ACCESS_KEY_ID
+        value: AKIAVIFNPKZARVHSRWNC
+      - key: AWS_SECRET_ACCESS_KEY
+        value: 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
+      - key: AWS_STORAGE_BUCKET_NAME
+        value: om-netflix-clone
